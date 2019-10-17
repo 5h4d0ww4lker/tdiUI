@@ -1,0 +1,229 @@
+<div [@routerTransition]>
+    <div class="kt-subheader kt-grid__item">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                <span>{{l("Quotations")}}</span>
+            </h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">
+                {{l("QuotationsHeaderInfo")}}
+            </span>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+				<button (click)="exportToExcel()" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                <button *ngIf="isGranted('Pages.Quotations.Create')" (click)="createQuotation()" 
+			class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewQuotation")}}</button>
+            </div>
+        </div>
+    </div>
+    <div class="kt-content">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+			
+                <form class="kt-form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                        <span class="input-group-btn">
+                                            <button (click)="getQuotations()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         <div class="kt-separator kt-separator--border-dashed"></div>
+						     </div>
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="QuotationNumberFilter">{{l("QuotationNumber")}}</label>
+									<input type="text" class="form-control" id="QuotationNumberFilter" name="quotationNumberFilter" [(ngModel)]="quotationNumberFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="PriceValidityFilter">{{l("PriceValidity")}}</label>
+									<input type="text" class="form-control" id="PriceValidityFilter" name="priceValidityFilter" [(ngModel)]="priceValidityFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TermOfPaymentFilter">{{l("TermOfPayment")}}</label>
+									<input type="text" class="form-control" id="TermOfPaymentFilter" name="termOfPaymentFilter" [(ngModel)]="termOfPaymentFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ShipmentTypesFilter">{{l("ShipmentTypes")}}</label>
+									<input type="text" class="form-control" id="ShipmentTypesFilter" name="shipmentTypesFilter" [(ngModel)]="shipmentTypesFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DiscountInPercentFilter">{{l("DiscountInPercent")}}</label>
+									<input type="text" class="form-control" id="DiscountInPercentFilter" name="discountInPercentFilter" [(ngModel)]="discountInPercentFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DiscountInAmountFilter">{{l("DiscountInAmount")}}</label>
+									<input type="text" class="form-control" id="DiscountInAmountFilter" name="discountInAmountFilter" [(ngModel)]="discountInAmountFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ClientClientNameFilter">({{l("Client")}}) {{l("ClientName")}}</label>
+									<input type="text" class="form-control" id="ClientClientNameFilter" name="clientClientNameFilter" [(ngModel)]="clientClientNameFilter">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getQuotations($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.Quotations.Edit', 'Pages.Quotations.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="clientFk.clientName">
+                                        {{l('ClientName')}}
+                                        <p-sortIcon field="clientClientName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="quotationNumber">
+                                        {{l('QuotationNumber')}}
+                                        <p-sortIcon field="quotation.quotationNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="priceValidity">
+                                        {{l('PriceValidity')}}
+                                        <p-sortIcon field="quotation.priceValidity"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="termOfPayment">
+                                        {{l('TermOfPayment')}}
+                                        <p-sortIcon field="quotation.termOfPayment"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="shipmentTypes">
+                                        {{l('ShipmentTypes')}}
+                                        <p-sortIcon field="quotation.shipmentTypes"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="discountInPercent">
+                                        {{l('DiscountInPercent')}}
+                                        <p-sortIcon field="quotation.discountInPercent"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="discountInAmount">
+                                        {{l('DiscountInAmount')}}
+                                        <p-sortIcon field="quotation.discountInAmount"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Quotations.Edit', 'Pages.Quotations.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;"
+														(click)="viewQuotationModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+													<a href="javascript:;" *ngIf="permission.isGranted('Pages.Quotations.Edit')"
+														(click)="createOrEditQuotationModal.show(record.quotation.id)">{{l('Edit')}}</a>
+												</li>
+												<li>
+											        <a href="javascript:;" *ngIf="permission.isGranted('Pages.Quotations.Delete')"
+														(click)="deleteQuotation(record.quotation)">{{l('Delete')}}</a>
+												</li>
+                                                <li>
+                                                    <a href="javascript:;" *ngIf="entityHistoryEnabled"
+                                                       (click)="showHistory(record.quotation)">{{l('History')}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+												<span class="ui-column-title"> {{l('ClientName')}}</span>
+												{{record.clientClientName}}
+											</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('QuotationNumber')}}</span>
+											{{record.quotation.quotationNumber}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('PriceValidity')}}</span>
+											{{record.quotation.priceValidity}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TermOfPayment')}}</span>
+											{{record.quotation.termOfPayment}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('ShipmentTypes')}}</span>
+											{{record.quotation.shipmentTypes}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DiscountInPercent')}}</span>
+											{{record.quotation.discountInPercent}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DiscountInAmount')}}</span>
+											{{record.quotation.discountInAmount}}
+										</td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                         #paginator
+                                         (onPageChange)="getQuotations($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <createOrEditQuotationModal #createOrEditQuotationModal (modalSave)="getQuotations()"></createOrEditQuotationModal>
+    <viewQuotationModal #viewQuotationModal></viewQuotationModal>
+     <entityTypeHistoryModal #entityTypeHistoryModal></entityTypeHistoryModal>
+</div>

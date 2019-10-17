@@ -1,0 +1,132 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #quotationItemForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="quotationItem.id">{{l("EditQuotationItem")}}</span>
+                        <span *ngIf="!quotationItem.id">{{l("CreateNewQuotationItem")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="QuotationQuotationNumber">{{l("Quotation")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="QuotationQuotationNumber" name="quotationQuotationNumber" [(ngModel)]="quotationQuotationNumber" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectQuotationModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setQuotationIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="quotationItem.quotationId" [(ngModel)]="quotationItem.quotationId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="ProductCategoryMaterial">{{l("ProductCategory")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductCategoryMaterial" name="productCategoryMaterial" [(ngModel)]="productCategoryMaterial" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectProductCategoryModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="quotationItem.productCategoryId" [(ngModel)]="quotationItem.productCategoryId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="ProductSubCategoryPipeDiameter">{{l("ProductSubCategory")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductSubCategoryPipeDiameter" name="productSubCategoryPipeDiameter" [(ngModel)]="productSubCategoryPipeDiameter" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectProductSubCategoryModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setProductSubCategoryIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="quotationItem.productSubCategoryId" [(ngModel)]="quotationItem.productSubCategoryId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="UnitPricePrice">{{l("UnitPrice")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="UnitPricePrice" name="unitPricePrice" [(ngModel)]="unitPricePrice" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectUnitPriceModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setUnitPriceIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="quotationItem.unitPriceId" [(ngModel)]="quotationItem.unitPriceId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="ClientUnitPriceDescription">{{l("ClientUnitPrice")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ClientUnitPriceDescription" name="clientUnitPriceDescription" [(ngModel)]="clientUnitPriceDescription" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectClientUnitPriceModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setClientUnitPriceIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="quotationItem.clientUnitPriceId" [(ngModel)]="quotationItem.clientUnitPriceId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="QuotationUnitPriceDescription">{{l("QuotationUnitPrice")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="QuotationUnitPriceDescription" name="quotationUnitPriceDescription" [(ngModel)]="quotationUnitPriceDescription" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectQuotationUnitPriceModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setQuotationUnitPriceIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="quotationItem.quotationUnitPriceId" [(ngModel)]="quotationItem.quotationUnitPriceId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="QuotationItem_UnitOfMeasurement">{{l("UnitOfMeasurement")}} *</label>
+									<input type="text" id="QuotationItem_UnitOfMeasurement" class="form-control" [(ngModel)]="quotationItem.unitOfMeasurement" name="UnitOfMeasurement"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="QuotationItem_Quantity">{{l("Quantity")}} *</label>
+									<input type="text" id="QuotationItem_Quantity" class="form-control" [(ngModel)]="quotationItem.quantity" name="Quantity"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="QuotationItem_TotalAmountInETB">{{l("TotalAmountInETB")}} *</label>
+									<input type="text" id="QuotationItem_TotalAmountInETB" class="form-control" [(ngModel)]="quotationItem.totalAmountInETB" name="TotalAmountInETB"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="QuotationItem_Description">{{l("Description")}} *</label>
+									<input type="text" id="QuotationItem_Description" class="form-control" [(ngModel)]="quotationItem.description" name="Description"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!quotationItemForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<quotationItemQuotationLookupTableModal #quotationItemQuotationLookupTableModal (modalSave)="getNewQuotationId()"></quotationItemQuotationLookupTableModal>
+		 <quotationItemProductCategoryLookupTableModal #quotationItemProductCategoryLookupTableModal (modalSave)="getNewProductCategoryId()"></quotationItemProductCategoryLookupTableModal>
+		 <quotationItemProductSubCategoryLookupTableModal #quotationItemProductSubCategoryLookupTableModal (modalSave)="getNewProductSubCategoryId()"></quotationItemProductSubCategoryLookupTableModal>
+		 <quotationItemUnitPriceLookupTableModal #quotationItemUnitPriceLookupTableModal (modalSave)="getNewUnitPriceId()"></quotationItemUnitPriceLookupTableModal>
+		 <quotationItemClientUnitPriceLookupTableModal #quotationItemClientUnitPriceLookupTableModal (modalSave)="getNewClientUnitPriceId()"></quotationItemClientUnitPriceLookupTableModal>
+		 <quotationItemQuotationUnitPriceLookupTableModal #quotationItemQuotationUnitPriceLookupTableModal (modalSave)="getNewQuotationUnitPriceId()"></quotationItemQuotationUnitPriceLookupTableModal>
+		 
+</div>

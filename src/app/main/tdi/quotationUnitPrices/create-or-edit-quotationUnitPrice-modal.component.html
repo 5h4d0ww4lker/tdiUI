@@ -1,0 +1,57 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #quotationUnitPriceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="quotationUnitPrice.id">{{l("EditQuotationUnitPrice")}}</span>
+                        <span *ngIf="!quotationUnitPrice.id">{{l("CreateNewQuotationUnitPrice")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="QuotationQuotationNumber">{{l("Quotation")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="QuotationQuotationNumber" name="quotationQuotationNumber" [(ngModel)]="quotationQuotationNumber" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectQuotationModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setQuotationIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="quotationUnitPrice.quotationId" [(ngModel)]="quotationUnitPrice.quotationId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="QuotationUnitPrice_Description">{{l("Description")}} *</label>
+									<input type="text" id="QuotationUnitPrice_Description" class="form-control" [(ngModel)]="quotationUnitPrice.description" name="Description"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="QuotationUnitPrice_Unit">{{l("Unit")}} *</label>
+									<input type="text" id="QuotationUnitPrice_Unit" class="form-control" [(ngModel)]="quotationUnitPrice.unit" name="Unit"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="QuotationUnitPrice_Price">{{l("Price")}} *</label>
+									<input type="text" id="QuotationUnitPrice_Price" class="form-control" [(ngModel)]="quotationUnitPrice.price" name="Price"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!quotationUnitPriceForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<quotationUnitPriceQuotationLookupTableModal #quotationUnitPriceQuotationLookupTableModal (modalSave)="getNewQuotationId()"></quotationUnitPriceQuotationLookupTableModal>
+		 
+</div>

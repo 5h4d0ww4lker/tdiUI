@@ -1,0 +1,66 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("UnitOfMeasurement")}} :</h6>
+                        {{ item.quotationItem.unitOfMeasurement }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Quantity")}} :</h6>
+                        {{ item.quotationItem.quantity }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TotalAmountInETB")}} :</h6>
+                        {{ item.quotationItem.totalAmountInETB }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Description")}} :</h6>
+                        {{ item.quotationItem.description }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Quotation")}}) {{l("QuotationNumber")}} :</h6>
+                        {{item.quotationQuotationNumber}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("ProductCategory")}}) {{l("Material")}} :</h6>
+                        {{item.productCategoryMaterial}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("ProductSubCategory")}}) {{l("PipeDiameter")}} :</h6>
+                        {{item.productSubCategoryPipeDiameter}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("UnitPrice")}}) {{l("Price")}} :</h6>
+                        {{item.unitPricePrice}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("ClientUnitPrice")}}) {{l("Description")}} :</h6>
+                        {{item.clientUnitPriceDescription}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("QuotationUnitPrice")}}) {{l("Description")}} :</h6>
+                        {{item.quotationUnitPriceDescription}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

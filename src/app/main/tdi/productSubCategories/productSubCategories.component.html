@@ -1,0 +1,295 @@
+<div [@routerTransition]>
+    <div class="kt-subheader kt-grid__item">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                <span>{{l("ProductSubCategories")}}</span>
+            </h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">
+                {{l("ProductSubCategoriesHeaderInfo")}}
+            </span>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+				<button (click)="exportToExcel()" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                <button *ngIf="isGranted('Pages.ProductSubCategories.Create')" (click)="createProductSubCategory()" 
+			class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewProductSubCategory")}}</button>
+            </div>
+        </div>
+    </div>
+    <div class="kt-content">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+			
+                <form class="kt-form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                        <span class="input-group-btn">
+                                            <button (click)="getProductSubCategories()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         <div class="kt-separator kt-separator--border-dashed"></div>
+						     </div>
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="PipeDiameterFilter">{{l("PipeDiameter")}}</label>
+									<input type="text" class="form-control" id="PipeDiameterFilter" name="pipeDiameterFilter" [(ngModel)]="pipeDiameterFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="WallSFilter">{{l("WallS")}}</label>
+									<input type="text" class="form-control" id="WallSFilter" name="wallSFilter" [(ngModel)]="wallSFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="SDRFilter">{{l("SDR")}}</label>
+									<input type="text" class="form-control" id="SDRFilter" name="sdrFilter" [(ngModel)]="sdrFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="PNFilter">{{l("PN")}}</label>
+									<input type="text" class="form-control" id="PNFilter" name="pnFilter" [(ngModel)]="pnFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="WPMFilter">{{l("WPM")}}</label>
+									<input type="text" class="form-control" id="WPMFilter" name="wpmFilter" [(ngModel)]="wpmFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="OutputKGHFilter">{{l("OutputKGH")}}</label>
+									<input type="text" class="form-control" id="OutputKGHFilter" name="outputKGHFilter" [(ngModel)]="outputKGHFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="HauiOffSpeedFilter">{{l("HauiOffSpeed")}}</label>
+									<input type="text" class="form-control" id="HauiOffSpeedFilter" name="hauiOffSpeedFilter" [(ngModel)]="hauiOffSpeedFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="OutputTAFilter">{{l("OutputTA")}}</label>
+									<input type="text" class="form-control" id="OutputTAFilter" name="outputTAFilter" [(ngModel)]="outputTAFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ProductionTimeKMAFilter">{{l("ProductionTimeKMA")}}</label>
+									<input type="text" class="form-control" id="ProductionTimeKMAFilter" name="productionTimeKMAFilter" [(ngModel)]="productionTimeKMAFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ProductionPipeLengthKMAFilter">{{l("ProductionPipeLengthKMA")}}</label>
+									<input type="text" class="form-control" id="ProductionPipeLengthKMAFilter" name="productionPipeLengthKMAFilter" [(ngModel)]="productionPipeLengthKMAFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="PipeLengthMFilter">{{l("PipeLengthM")}}</label>
+									<input type="text" class="form-control" id="PipeLengthMFilter" name="pipeLengthMFilter" [(ngModel)]="pipeLengthMFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ProductCategoryMaterialFilter">({{l("ProductCategory")}}) {{l("Material")}}</label>
+									<input type="text" class="form-control" id="ProductCategoryMaterialFilter" name="productCategoryMaterialFilter" [(ngModel)]="productCategoryMaterialFilter">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getProductSubCategories($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.ProductSubCategories.Edit', 'Pages.ProductSubCategories.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="productCategoryFk.material">
+                                        {{l('Material')}}
+                                        <p-sortIcon field="productCategoryMaterial"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="pipeDiameter">
+                                        {{l('PipeDiameter')}}
+                                        <p-sortIcon field="productSubCategory.pipeDiameter"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="wallS">
+                                        {{l('WallS')}}
+                                        <p-sortIcon field="productSubCategory.wallS"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="sdr">
+                                        {{l('SDR')}}
+                                        <p-sortIcon field="productSubCategory.sdr"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="pn">
+                                        {{l('PN')}}
+                                        <p-sortIcon field="productSubCategory.pn"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="wpm">
+                                        {{l('WPM')}}
+                                        <p-sortIcon field="productSubCategory.wpm"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="outputKGH">
+                                        {{l('OutputKGH')}}
+                                        <p-sortIcon field="productSubCategory.outputKGH"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hauiOffSpeed">
+                                        {{l('HauiOffSpeed')}}
+                                        <p-sortIcon field="productSubCategory.hauiOffSpeed"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="outputTA">
+                                        {{l('OutputTA')}}
+                                        <p-sortIcon field="productSubCategory.outputTA"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="productionTimeKMA">
+                                        {{l('ProductionTimeKMA')}}
+                                        <p-sortIcon field="productSubCategory.productionTimeKMA"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="productionPipeLengthKMA">
+                                        {{l('ProductionPipeLengthKMA')}}
+                                        <p-sortIcon field="productSubCategory.productionPipeLengthKMA"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="pipeLengthM">
+                                        {{l('PipeLengthM')}}
+                                        <p-sortIcon field="productSubCategory.pipeLengthM"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.ProductSubCategories.Edit', 'Pages.ProductSubCategories.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;"
+														(click)="viewProductSubCategoryModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+													<a href="javascript:;" *ngIf="permission.isGranted('Pages.ProductSubCategories.Edit')"
+														(click)="createOrEditProductSubCategoryModal.show(record.productSubCategory.id)">{{l('Edit')}}</a>
+												</li>
+												<li>
+											        <a href="javascript:;" *ngIf="permission.isGranted('Pages.ProductSubCategories.Delete')"
+														(click)="deleteProductSubCategory(record.productSubCategory)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+												<span class="ui-column-title"> {{l('Material')}}</span>
+												{{record.productCategoryMaterial}}
+											</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('PipeDiameter')}}</span>
+											{{record.productSubCategory.pipeDiameter}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('WallS')}}</span>
+											{{record.productSubCategory.wallS}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('SDR')}}</span>
+											{{record.productSubCategory.sdr}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('PN')}}</span>
+											{{record.productSubCategory.pn}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('WPM')}}</span>
+											{{record.productSubCategory.wpm}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('OutputKGH')}}</span>
+											{{record.productSubCategory.outputKGH}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('HauiOffSpeed')}}</span>
+											{{record.productSubCategory.hauiOffSpeed}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('OutputTA')}}</span>
+											{{record.productSubCategory.outputTA}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('ProductionTimeKMA')}}</span>
+											{{record.productSubCategory.productionTimeKMA}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('ProductionPipeLengthKMA')}}</span>
+											{{record.productSubCategory.productionPipeLengthKMA}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('PipeLengthM')}}</span>
+											{{record.productSubCategory.pipeLengthM}}
+										</td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                         #paginator
+                                         (onPageChange)="getProductSubCategories($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <createOrEditProductSubCategoryModal #createOrEditProductSubCategoryModal (modalSave)="getProductSubCategories()"></createOrEditProductSubCategoryModal>
+    <viewProductSubCategoryModal #viewProductSubCategoryModal></viewProductSubCategoryModal>
+    
+</div>

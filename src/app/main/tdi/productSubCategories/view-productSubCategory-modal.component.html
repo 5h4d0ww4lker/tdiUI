@@ -1,0 +1,74 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PipeDiameter")}} :</h6>
+                        {{ item.productSubCategory.pipeDiameter }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("WallS")}} :</h6>
+                        {{ item.productSubCategory.wallS }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SDR")}} :</h6>
+                        {{ item.productSubCategory.sdr }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PN")}} :</h6>
+                        {{ item.productSubCategory.pn }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("WPM")}} :</h6>
+                        {{ item.productSubCategory.wpm }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("OutputKGH")}} :</h6>
+                        {{ item.productSubCategory.outputKGH }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HauiOffSpeed")}} :</h6>
+                        {{ item.productSubCategory.hauiOffSpeed }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("OutputTA")}} :</h6>
+                        {{ item.productSubCategory.outputTA }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ProductionTimeKMA")}} :</h6>
+                        {{ item.productSubCategory.productionTimeKMA }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ProductionPipeLengthKMA")}} :</h6>
+                        {{ item.productSubCategory.productionPipeLengthKMA }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PipeLengthM")}} :</h6>
+                        {{ item.productSubCategory.pipeLengthM }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("ProductCategory")}}) {{l("Material")}} :</h6>
+                        {{item.productCategoryMaterial}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

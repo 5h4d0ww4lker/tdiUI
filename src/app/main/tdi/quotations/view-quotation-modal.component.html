@@ -1,0 +1,54 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuotationNumber")}} :</h6>
+                        {{ item.quotation.quotationNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PriceValidity")}} :</h6>
+                        {{ item.quotation.priceValidity }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TermOfPayment")}} :</h6>
+                        {{ item.quotation.termOfPayment }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ShipmentTypes")}} :</h6>
+                        {{ item.quotation.shipmentTypes }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiscountInPercent")}} :</h6>
+                        {{ item.quotation.discountInPercent }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiscountInAmount")}} :</h6>
+                        {{ item.quotation.discountInAmount }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Client")}}) {{l("ClientName")}} :</h6>
+                        {{item.clientClientName}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

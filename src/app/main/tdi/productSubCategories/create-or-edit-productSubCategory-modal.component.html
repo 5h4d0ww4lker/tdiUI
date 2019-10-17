@@ -1,0 +1,97 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productSubCategoryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productSubCategory.id">{{l("EditProductSubCategory")}}</span>
+                        <span *ngIf="!productSubCategory.id">{{l("CreateNewProductSubCategory")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="ProductCategoryMaterial">{{l("ProductCategory")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductCategoryMaterial" name="productCategoryMaterial" [(ngModel)]="productCategoryMaterial" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectProductCategoryModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="productSubCategory.productCategoryId" [(ngModel)]="productSubCategory.productCategoryId" type="text" required hidden>
+		 
+
+								<div class="form-group">
+									<label for="ProductSubCategory_PipeDiameter">{{l("PipeDiameter")}} *</label>
+									<input type="text" id="ProductSubCategory_PipeDiameter" class="form-control" [(ngModel)]="productSubCategory.pipeDiameter" name="PipeDiameter"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductSubCategory_WallS">{{l("WallS")}} *</label>
+									<input type="text" id="ProductSubCategory_WallS" class="form-control" [(ngModel)]="productSubCategory.wallS" name="WallS"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductSubCategory_SDR">{{l("SDR")}} *</label>
+									<input type="text" id="ProductSubCategory_SDR" class="form-control" [(ngModel)]="productSubCategory.sdr" name="SDR"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductSubCategory_PN">{{l("PN")}}</label>
+									<input type="text" id="ProductSubCategory_PN" class="form-control" [(ngModel)]="productSubCategory.pn" name="PN"   minlength="1"  maxlength="100" />
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductSubCategory_WPM">{{l("WPM")}} *</label>
+									<input type="text" id="ProductSubCategory_WPM" class="form-control" [(ngModel)]="productSubCategory.wpm" name="WPM"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductSubCategory_OutputKGH">{{l("OutputKGH")}} *</label>
+									<input type="text" id="ProductSubCategory_OutputKGH" class="form-control" [(ngModel)]="productSubCategory.outputKGH" name="OutputKGH"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductSubCategory_HauiOffSpeed">{{l("HauiOffSpeed")}} *</label>
+									<input type="text" id="ProductSubCategory_HauiOffSpeed" class="form-control" [(ngModel)]="productSubCategory.hauiOffSpeed" name="HauiOffSpeed"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductSubCategory_OutputTA">{{l("OutputTA")}} *</label>
+									<input type="text" id="ProductSubCategory_OutputTA" class="form-control" [(ngModel)]="productSubCategory.outputTA" name="OutputTA"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductSubCategory_ProductionTimeKMA">{{l("ProductionTimeKMA")}} *</label>
+									<input type="text" id="ProductSubCategory_ProductionTimeKMA" class="form-control" [(ngModel)]="productSubCategory.productionTimeKMA" name="ProductionTimeKMA"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductSubCategory_ProductionPipeLengthKMA">{{l("ProductionPipeLengthKMA")}} *</label>
+									<input type="text" id="ProductSubCategory_ProductionPipeLengthKMA" class="form-control" [(ngModel)]="productSubCategory.productionPipeLengthKMA" name="ProductionPipeLengthKMA"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductSubCategory_PipeLengthM">{{l("PipeLengthM")}} *</label>
+									<input type="text" id="ProductSubCategory_PipeLengthM" class="form-control" [(ngModel)]="productSubCategory.pipeLengthM" name="PipeLengthM"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!productSubCategoryForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<productSubCategoryProductCategoryLookupTableModal #productSubCategoryProductCategoryLookupTableModal (modalSave)="getNewProductCategoryId()"></productSubCategoryProductCategoryLookupTableModal>
+		 
+</div>

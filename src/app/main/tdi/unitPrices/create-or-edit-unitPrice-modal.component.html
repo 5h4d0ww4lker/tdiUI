@@ -1,0 +1,52 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #unitPriceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="unitPrice.id">{{l("EditUnitPrice")}}</span>
+                        <span *ngIf="!unitPrice.id">{{l("CreateNewUnitPrice")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="ProductDescription">{{l("Product")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductDescription" name="productDescription" [(ngModel)]="productDescription" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="unitPrice.productId" [(ngModel)]="unitPrice.productId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="UnitPrice_Price">{{l("Price")}}</label>
+									<input type="text" id="UnitPrice_Price" class="form-control" [(ngModel)]="unitPrice.price" name="Price"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="UnitPrice_Unit">{{l("Unit")}} *</label>
+									<input type="text" id="UnitPrice_Unit" class="form-control" [(ngModel)]="unitPrice.unit" name="Unit"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!unitPriceForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<unitPriceProductLookupTableModal #unitPriceProductLookupTableModal (modalSave)="getNewProductId()"></unitPriceProductLookupTableModal>
+		 
+</div>

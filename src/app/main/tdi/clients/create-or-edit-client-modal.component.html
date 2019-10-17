@@ -1,0 +1,62 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #clientForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="client.id">{{l("EditClient")}}</span>
+                        <span *ngIf="!client.id">{{l("CreateNewClient")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="ContactPersonFullName">{{l("ContactPerson")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactPersonFullName" name="contactPersonFullName" [(ngModel)]="contactPersonFullName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectContactPersonModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setContactPersonIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="client.contactPersonId" [(ngModel)]="client.contactPersonId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="Client_ClientName">{{l("ClientName")}} *</label>
+									<input type="text" id="Client_ClientName" class="form-control" [(ngModel)]="client.clientName" name="ClientName"     required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="Client_ClientTin">{{l("ClientTin")}}</label>
+									<input type="text" id="Client_ClientTin" class="form-control" [(ngModel)]="client.clientTin" name="ClientTin"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Client_ClientAddress">{{l("ClientAddress")}}</label>
+									<input type="text" id="Client_ClientAddress" class="form-control" [(ngModel)]="client.clientAddress" name="ClientAddress"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Client_ClientPhone">{{l("ClientPhone")}}</label>
+									<input type="text" id="Client_ClientPhone" class="form-control" [(ngModel)]="client.clientPhone" name="ClientPhone"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!clientForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<clientContactPersonLookupTableModal #clientContactPersonLookupTableModal (modalSave)="getNewContactPersonId()"></clientContactPersonLookupTableModal>
+		 
+</div>

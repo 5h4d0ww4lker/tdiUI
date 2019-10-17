@@ -1,0 +1,43 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productCategoryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productCategory.id">{{l("EditProductCategory")}}</span>
+                        <span *ngIf="!productCategory.id">{{l("CreateNewProductCategory")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="ProductCategory_Material">{{l("Material")}} *</label>
+									<input type="text" id="ProductCategory_Material" class="form-control" [(ngModel)]="productCategory.material" name="Material"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductCategory_Extruder">{{l("Extruder")}} *</label>
+									<input type="text" id="ProductCategory_Extruder" class="form-control" [(ngModel)]="productCategory.extruder" name="Extruder"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ProductCategory_Pipehead">{{l("Pipehead")}} *</label>
+									<input type="text" id="ProductCategory_Pipehead" class="form-control" [(ngModel)]="productCategory.pipehead" name="Pipehead"   minlength="1"  maxlength="100"  required/>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!productCategoryForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
