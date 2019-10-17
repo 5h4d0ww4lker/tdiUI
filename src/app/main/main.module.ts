@@ -2,6 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppCommonModule } from '@app/shared/common/app-common.module';
+import { OrderedProductsComponent } from './tdi/orderedProducts/orderedProducts.component';
+import { ViewOrderedProductModalComponent } from './tdi/orderedProducts/view-orderedProduct-modal.component';
+import { CreateOrEditOrderedProductModalComponent } from './tdi/orderedProducts/create-or-edit-orderedProduct-modal.component';
+import { OrderedProductQuotationItemLookupTableModalComponent } from './tdi/orderedProducts/orderedProduct-quotationItem-lookup-table-modal.component';
+
 import { QuotationItemsComponent } from './tdi/quotationItems/quotationItems.component';
 import { ViewQuotationItemModalComponent } from './tdi/quotationItems/view-quotationItem-modal.component';
 import { CreateOrEditQuotationItemModalComponent } from './tdi/quotationItems/create-or-edit-quotationItem-modal.component';
@@ -103,6 +108,9 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         PopoverModule.forRoot()
     ],
     declarations: [
+		OrderedProductsComponent,
+		ViewOrderedProductModalComponent,		CreateOrEditOrderedProductModalComponent,
+    OrderedProductQuotationItemLookupTableModalComponent,
 		QuotationItemsComponent,
 		ViewQuotationItemModalComponent,		CreateOrEditQuotationItemModalComponent,
     QuotationItemQuotationLookupTableModalComponent,

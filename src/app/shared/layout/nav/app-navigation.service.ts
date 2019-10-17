@@ -27,13 +27,13 @@ export class AppNavigationService {
             // new AppMenuItem('Products', 'Pages.Products', 'flaticon-more', '/app/main/tdi/products'),
 
 
-            new AppMenuItem('Clients', '', 'flaticon-interface-8', '', [
+            new AppMenuItem('Clients', '', 'flaticon-user', '', [
                 new AppMenuItem('ContactPersons', 'Pages.ContactPersons', 'flaticon-more', '/app/main/tdi/contactPersons'),
 
                 new AppMenuItem('Clients', 'Pages.Clients', 'flaticon-more', '/app/main/tdi/clients'),
 
             ]),
-            new AppMenuItem('Products', '', 'flaticon-interface-8', '', [
+            new AppMenuItem('Products', '', 'flaticon-list', '', [
                 new AppMenuItem('ProductCategories', 'Pages.ProductCategories', 'flaticon-more', '/app/main/tdi/productCategories'),
 
                 new AppMenuItem('ProductSubCategories', 'Pages.ProductSubCategories', 'flaticon-more', '/app/main/tdi/productSubCategories'),
@@ -41,12 +41,13 @@ export class AppNavigationService {
 
 
             ]),
-            new AppMenuItem('Quotations', '', 'flaticon-interface-8', '', [
+            new AppMenuItem('Quotations', '', 'flaticon-clipboard', '', [
                 new AppMenuItem('Quotations', 'Pages.Quotations', 'flaticon-more', '/app/main/tdi/quotations'),
                 new AppMenuItem('QuotationItems', 'Pages.QuotationItems', 'flaticon-more', '/app/main/tdi/quotationItems'),
+                new AppMenuItem('OrderedProducts', 'Pages.OrderedProducts', 'flaticon-more', '/app/main/tdi/orderedProducts'),
 
             ]),
-            new AppMenuItem('UnitPrices', '', 'flaticon-interface-8', '', [
+            new AppMenuItem('UnitPrices', '', 'flaticon-price-tag', '', [
                 new AppMenuItem('UnitPrices', 'Pages.UnitPrices', 'flaticon-more', '/app/main/tdi/unitPrices'),
 
 
@@ -55,7 +56,8 @@ export class AppNavigationService {
                 new AppMenuItem('QuotationUnitPrices', 'Pages.QuotationUnitPrices', 'flaticon-more', '/app/main/tdi/quotationUnitPrices'),
 
             ]),
-            new AppMenuItem('Administration', '', 'flaticon-interface-7', '', [
+
+            new AppMenuItem('Administration', '', 'flaticon-cog-wheels', '', [
                 new AppMenuItem('OrganizationUnits', 'Pages.Administration.OrganizationUnits', 'flaticon-map', '/app/admin/organization-units'),
                 new AppMenuItem('Roles', 'Pages.Administration.Roles', 'flaticon-suitcase', '/app/admin/roles'),
                 new AppMenuItem('Users', 'Pages.Administration.Users', 'flaticon-users', '/app/admin/users'),

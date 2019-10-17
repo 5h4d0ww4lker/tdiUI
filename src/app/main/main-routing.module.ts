@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { OrderedProductsComponent } from './tdi/orderedProducts/orderedProducts.component';
 import { QuotationItemsComponent } from './tdi/quotationItems/quotationItems.component';
 import { QuotationsComponent } from './tdi/quotations/quotations.component';
 
@@ -25,6 +26,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
             {
                 path: '',
                 children: [
+                    { path: 'tdi/orderedProducts', component: OrderedProductsComponent, data: { permission: 'Pages.OrderedProducts' }  },
                     { path: 'tdi/quotationItems', component: QuotationItemsComponent, data: { permission: 'Pages.QuotationItems' }  },
                     { path: 'tdi/quotationUnitPrices', component: QuotationUnitPricesComponent, data: { permission: 'Pages.QuotationUnitPrices' }  },
                     { path: 'tdi/clientUnitPrices', component: ClientUnitPricesComponent, data: { permission: 'Pages.ClientUnitPrices' }  },

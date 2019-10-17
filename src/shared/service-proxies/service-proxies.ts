@@ -5367,6 +5367,426 @@ export class NotificationServiceProxy {
 }
 
 @Injectable()
+export class OrderedProductsServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param quantityFilter (optional) 
+     * @param totalAmountInETBFilter (optional) 
+     * @param quotationItemDescriptionFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | null | undefined, quantityFilter: string | null | undefined, totalAmountInETBFilter: string | null | undefined, quotationItemDescriptionFilter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfGetOrderedProductForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrderedProducts/GetAll?";
+        if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
+        if (quantityFilter !== undefined)
+            url_ += "QuantityFilter=" + encodeURIComponent("" + quantityFilter) + "&"; 
+        if (totalAmountInETBFilter !== undefined)
+            url_ += "TotalAmountInETBFilter=" + encodeURIComponent("" + totalAmountInETBFilter) + "&"; 
+        if (quotationItemDescriptionFilter !== undefined)
+            url_ += "QuotationItemDescriptionFilter=" + encodeURIComponent("" + quotationItemDescriptionFilter) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfGetOrderedProductForViewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfGetOrderedProductForViewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetOrderedProductForViewDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfGetOrderedProductForViewDto.fromJS(resultData200) : new PagedResultDtoOfGetOrderedProductForViewDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfGetOrderedProductForViewDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getOrderedProductForView(id: number | null | undefined): Observable<GetOrderedProductForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrderedProducts/GetOrderedProductForView?";
+        if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetOrderedProductForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetOrderedProductForView(<any>response_);
+                } catch (e) {
+                    return <Observable<GetOrderedProductForViewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetOrderedProductForViewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetOrderedProductForView(response: HttpResponseBase): Observable<GetOrderedProductForViewDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? GetOrderedProductForViewDto.fromJS(resultData200) : new GetOrderedProductForViewDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetOrderedProductForViewDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getOrderedProductForEdit(id: number | null | undefined): Observable<GetOrderedProductForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/OrderedProducts/GetOrderedProductForEdit?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetOrderedProductForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetOrderedProductForEdit(<any>response_);
+                } catch (e) {
+                    return <Observable<GetOrderedProductForEditOutput>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetOrderedProductForEditOutput>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetOrderedProductForEdit(response: HttpResponseBase): Observable<GetOrderedProductForEditOutput> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? GetOrderedProductForEditOutput.fromJS(resultData200) : new GetOrderedProductForEditOutput();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetOrderedProductForEditOutput>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    createOrEdit(input: CreateOrEditOrderedProductDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/OrderedProducts/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/OrderedProducts/Delete?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param quantityFilter (optional) 
+     * @param totalAmountInETBFilter (optional) 
+     * @param quotationItemDescriptionFilter (optional) 
+     * @return Success
+     */
+    getOrderedProductsToExcel(filter: string | null | undefined, quantityFilter: string | null | undefined, totalAmountInETBFilter: string | null | undefined, quotationItemDescriptionFilter: string | null | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrderedProducts/GetOrderedProductsToExcel?";
+        if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
+        if (quantityFilter !== undefined)
+            url_ += "QuantityFilter=" + encodeURIComponent("" + quantityFilter) + "&"; 
+        if (totalAmountInETBFilter !== undefined)
+            url_ += "TotalAmountInETBFilter=" + encodeURIComponent("" + totalAmountInETBFilter) + "&"; 
+        if (quotationItemDescriptionFilter !== undefined)
+            url_ += "QuotationItemDescriptionFilter=" + encodeURIComponent("" + quotationItemDescriptionFilter) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetOrderedProductsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetOrderedProductsToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetOrderedProductsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? FileDto.fromJS(resultData200) : new FileDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllQuotationItemForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfOrderedProductQuotationItemLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrderedProducts/GetAllQuotationItemForLookupTable?";
+        if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllQuotationItemForLookupTable(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllQuotationItemForLookupTable(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfOrderedProductQuotationItemLookupTableDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfOrderedProductQuotationItemLookupTableDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllQuotationItemForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfOrderedProductQuotationItemLookupTableDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfOrderedProductQuotationItemLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfOrderedProductQuotationItemLookupTableDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfOrderedProductQuotationItemLookupTableDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class OrganizationUnitServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -20737,6 +21157,318 @@ export class NotificationSubscriptionDto implements INotificationSubscriptionDto
 export interface INotificationSubscriptionDto {
     name: string;
     isSubscribed: boolean | undefined;
+}
+
+export class PagedResultDtoOfGetOrderedProductForViewDto implements IPagedResultDtoOfGetOrderedProductForViewDto {
+    totalCount!: number | undefined;
+    items!: GetOrderedProductForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetOrderedProductForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items!.push(GetOrderedProductForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetOrderedProductForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetOrderedProductForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IPagedResultDtoOfGetOrderedProductForViewDto {
+    totalCount: number | undefined;
+    items: GetOrderedProductForViewDto[] | undefined;
+}
+
+export class GetOrderedProductForViewDto implements IGetOrderedProductForViewDto {
+    orderedProduct!: OrderedProductDto | undefined;
+    quotationItemDescription!: string | undefined;
+
+    constructor(data?: IGetOrderedProductForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.orderedProduct = data["orderedProduct"] ? OrderedProductDto.fromJS(data["orderedProduct"]) : <any>undefined;
+            this.quotationItemDescription = data["quotationItemDescription"];
+        }
+    }
+
+    static fromJS(data: any): GetOrderedProductForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetOrderedProductForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["orderedProduct"] = this.orderedProduct ? this.orderedProduct.toJSON() : <any>undefined;
+        data["quotationItemDescription"] = this.quotationItemDescription;
+        return data; 
+    }
+}
+
+export interface IGetOrderedProductForViewDto {
+    orderedProduct: OrderedProductDto | undefined;
+    quotationItemDescription: string | undefined;
+}
+
+export class OrderedProductDto implements IOrderedProductDto {
+    quantity!: string | undefined;
+    totalAmountInETB!: string | undefined;
+    quotationItemId!: number | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IOrderedProductDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.quantity = data["quantity"];
+            this.totalAmountInETB = data["totalAmountInETB"];
+            this.quotationItemId = data["quotationItemId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): OrderedProductDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OrderedProductDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["quantity"] = this.quantity;
+        data["totalAmountInETB"] = this.totalAmountInETB;
+        data["quotationItemId"] = this.quotationItemId;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IOrderedProductDto {
+    quantity: string | undefined;
+    totalAmountInETB: string | undefined;
+    quotationItemId: number | undefined;
+    id: number | undefined;
+}
+
+export class GetOrderedProductForEditOutput implements IGetOrderedProductForEditOutput {
+    orderedProduct!: CreateOrEditOrderedProductDto | undefined;
+    quotationItemDescription!: string | undefined;
+
+    constructor(data?: IGetOrderedProductForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.orderedProduct = data["orderedProduct"] ? CreateOrEditOrderedProductDto.fromJS(data["orderedProduct"]) : <any>undefined;
+            this.quotationItemDescription = data["quotationItemDescription"];
+        }
+    }
+
+    static fromJS(data: any): GetOrderedProductForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetOrderedProductForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["orderedProduct"] = this.orderedProduct ? this.orderedProduct.toJSON() : <any>undefined;
+        data["quotationItemDescription"] = this.quotationItemDescription;
+        return data; 
+    }
+}
+
+export interface IGetOrderedProductForEditOutput {
+    orderedProduct: CreateOrEditOrderedProductDto | undefined;
+    quotationItemDescription: string | undefined;
+}
+
+export class CreateOrEditOrderedProductDto implements ICreateOrEditOrderedProductDto {
+    quantity!: string;
+    totalAmountInETB!: string;
+    quotationItemId!: number | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditOrderedProductDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.quantity = data["quantity"];
+            this.totalAmountInETB = data["totalAmountInETB"];
+            this.quotationItemId = data["quotationItemId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditOrderedProductDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditOrderedProductDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["quantity"] = this.quantity;
+        data["totalAmountInETB"] = this.totalAmountInETB;
+        data["quotationItemId"] = this.quotationItemId;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface ICreateOrEditOrderedProductDto {
+    quantity: string;
+    totalAmountInETB: string;
+    quotationItemId: number | undefined;
+    id: number | undefined;
+}
+
+export class PagedResultDtoOfOrderedProductQuotationItemLookupTableDto implements IPagedResultDtoOfOrderedProductQuotationItemLookupTableDto {
+    totalCount!: number | undefined;
+    items!: OrderedProductQuotationItemLookupTableDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfOrderedProductQuotationItemLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items!.push(OrderedProductQuotationItemLookupTableDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfOrderedProductQuotationItemLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfOrderedProductQuotationItemLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IPagedResultDtoOfOrderedProductQuotationItemLookupTableDto {
+    totalCount: number | undefined;
+    items: OrderedProductQuotationItemLookupTableDto[] | undefined;
+}
+
+export class OrderedProductQuotationItemLookupTableDto implements IOrderedProductQuotationItemLookupTableDto {
+    id!: number | undefined;
+    displayName!: string | undefined;
+
+    constructor(data?: IOrderedProductQuotationItemLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.displayName = data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): OrderedProductQuotationItemLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OrderedProductQuotationItemLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data; 
+    }
+}
+
+export interface IOrderedProductQuotationItemLookupTableDto {
+    id: number | undefined;
+    displayName: string | undefined;
 }
 
 export class ListResultDtoOfOrganizationUnitDto implements IListResultDtoOfOrganizationUnitDto {
